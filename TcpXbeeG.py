@@ -20,7 +20,7 @@ import xbee
 from time import sleep
  
 # Host config
-host = 'vedri66.myvnc.com' # 'ubuntuserver'
+host = 'ip_address_or_ip.com'
 port = 3199
 
 # Checking connexion var
@@ -67,18 +67,7 @@ class ThreadReceiveTCP(threading.Thread):
                 tcp_connected = False
                 s.close()
                 raise socket.error
-                '''
-                test_TCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                try:
-                    test_TCP.connect((host, port))
-                    print "Trying to get server..."
-                except socket.error:
-                    print "No response from server"
-                    raise socket.error
-                finally:
-                    test_TCP.close()
-                    print "Close test socket"
-                '''
+
           except socket.error:
               tcp_connected = False
               s.close()
@@ -88,7 +77,6 @@ class ThreadReceiveTCP(threading.Thread):
               while not tcp_connected:
                   try:
                       s = TCPsocket()
-                      #tcp_connected = True
                   except socket.error:
                       tcp_connected = False
                       sleep(2)
@@ -107,9 +95,8 @@ class ThreadReceiveTCP(threading.Thread):
                   print 'Received from Server payload :', XBdata
                   
                   try:
-                      #print 'Dictionnary data :', str(dict(XBdata))
+
                       sd.sendto(XBdata, 0, (XBadr,232, 49413, 17, 2, 0))
-                  #sd.sendto(array[1], 0, (array[0],232, 49413, 17, 2, 0))
                   except:
                       print 'Problem to send data to XBEE from server'
                   else:
